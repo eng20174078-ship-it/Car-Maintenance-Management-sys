@@ -1,39 +1,33 @@
 package models;
 
-public class Invoice {
-    private String invoiceId;
-    private MaintenanceOrder maintenanceOrder;
-    private double totalAmount;
+import java.time.LocalDateTime;
 
-    // Constructor
-    public Invoice(String invoiceId, MaintenanceOrder maintenanceOrder, double totalAmount) {
-        this.invoiceId = invoiceId;
-        this.maintenanceOrder = maintenanceOrder;
-        this.totalAmount = totalAmount;
+public class Invoice implements Billable {
+
+    private int id;
+    private MaintenanceOrder order;
+    private LocalDateTime issueDate;
+
+    public Invoice(int id, MaintenanceOrder order) {
+        this.id = id;
+        this.order = order;
+        this.issueDate = LocalDateTime.now();
     }
 
-    // Getter and Setter methods
-    public String getInvoiceId() {
-        return invoiceId;
+    public int getId() { 
+        return id; 
     }
 
-    public void setInvoiceId(String invoiceId) {
-        this.invoiceId = invoiceId;
+    public MaintenanceOrder getOrder() { 
+        return order; 
     }
 
-    public MaintenanceOrder getMaintenanceOrder() {
-        return maintenanceOrder;
+    public LocalDateTime getIssueDate() { 
+        return issueDate; 
     }
 
-    public void setMaintenanceOrder(MaintenanceOrder maintenanceOrder) {
-        this.maintenanceOrder = maintenanceOrder;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    @Override
+    public double calculateTotal() {
+        return order.calculateTotalCost();
     }
 }

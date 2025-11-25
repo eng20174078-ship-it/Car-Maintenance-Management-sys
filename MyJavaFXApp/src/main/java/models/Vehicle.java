@@ -1,22 +1,33 @@
 package models;
+
 public class Vehicle {
     private String licensePlate;
     private String model;
-    private String owner;
+    private String ownerName;
+    private String ownerPhone;
 
-    // Constructor
-    public Vehicle(String licensePlate, String model, String owner) {
+    public Vehicle(String licensePlate, String model, String ownerName, String ownerPhone) 
+            throws InvalidVehicleDataException {
+
+        if (licensePlate == null || licensePlate.isBlank()) {
+            throw new InvalidVehicleDataException("License plate cannot be empty");
+        }
+
         this.licensePlate = licensePlate;
         this.model = model;
-        this.owner = owner;
+        this.ownerName = ownerName;
+        this.ownerPhone = ownerPhone;
     }
 
-    // Getter and Setter methods
+    // Getters & Setters
     public String getLicensePlate() {
         return licensePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
+    public void setLicensePlate(String licensePlate) throws InvalidVehicleDataException {
+        if (licensePlate == null || licensePlate.isBlank()) {
+            throw new InvalidVehicleDataException("License plate cannot be empty");
+        }
         this.licensePlate = licensePlate;
     }
 
@@ -24,15 +35,23 @@ public class Vehicle {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModel(String model) { 
+        this.model = model; 
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwnerName(String ownerName) { 
+        this.ownerName = ownerName; 
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) { 
+        this.ownerPhone = ownerPhone; 
     }
 }

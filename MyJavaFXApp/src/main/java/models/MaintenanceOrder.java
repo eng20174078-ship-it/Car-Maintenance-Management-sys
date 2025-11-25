@@ -1,49 +1,93 @@
 package models;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MaintenanceOrder {
-    private String orderId;
+
+    private int id;
     private Vehicle vehicle;
     private String serviceType;
-    private String status;
+    private RepairStatus status;
+    private Technician assignedTechnician;
+    private LocalDateTime createdAt;
+    private double laborCost;
 
-    // Constructor
-    public MaintenanceOrder(String orderId, Vehicle vehicle, String serviceType, String status) {
-        this.orderId = orderId;
+    private List<SparePartUsage> usedParts = new ArrayList<>();
+
+    public MaintenanceOrder(int id, Vehicle vehicle, String serviceType) {
+        this.id = id;
         this.vehicle = vehicle;
         this.serviceType = serviceType;
-        this.status = status;
+        this.status = RepairStatus.PENDING;
+        this.createdAt = LocalDateTime.now();
     }
 
-    // Getter and Setter methods
-    public String getOrderId() {
-        return orderId;
+    // Getters & Setters
+    public int getId() { 
+        return id; 
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public Vehicle getVehicle() { 
+        return vehicle; 
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public void setVehicle(Vehicle vehicle) { 
+        this.vehicle = vehicle; 
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public String getServiceType() { 
+        return serviceType; 
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public void setServiceType(String serviceType) { 
+        this.serviceType = serviceType; 
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public RepairStatus getStatus() { 
+        return status; 
     }
 
-    public String getStatus() {
-        return status;
+    public void setStatus(RepairStatus status) { 
+        this.status = status; 
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public Technician getAssignedTechnician() { 
+        return assignedTechnician; 
+    }
+
+    public void setAssignedTechnician(Technician assignedTechnician) {
+        this.assignedTechnician = assignedTechnician;
+    }
+
+    public LocalDateTime getCreatedAt() { 
+        return createdAt; 
+    }
+
+    public double getLaborCost() { 
+        return laborCost; 
+    }
+
+    public void setLaborCost(double laborCost) { 
+        this.laborCost = laborCost; 
+    }
+
+    public List<SparePartUsage> getUsedParts() {
+        return usedParts;
+    }
+
+    public void addUsedPart(SparePartUsage usage) {
+        usedParts.add(usage);
+    }
+
+    public double calculatePartsCost() {
+        return usedParts.stream()
+                .mapToDouble(SparePartUsage::getTotalCost)
+                .sum();
+    }
+
+    public double calculateTotalCost() {
+        return calculatePartsCost() + laborCost;
     }
 }

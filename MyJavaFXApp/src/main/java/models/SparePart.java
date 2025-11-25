@@ -1,39 +1,51 @@
 package models;
 
 public class SparePart {
-    private String partId;
+    private int id;
     private String name;
-    private int quantity;
+    private double unitPrice;
+    private int stockQuantity;
 
-    // Constructor
-    public SparePart(String partId, String name, int quantity) {
-        this.partId = partId;
+    public SparePart(int id, String name, double unitPrice, int stockQuantity) {
+        this.id = id;
         this.name = name;
-        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.stockQuantity = stockQuantity;
     }
 
-    // Getter and Setter methods
-    public String getPartId() {
-        return partId;
+    // Getters & Setters
+    public int getId() { 
+        return id; 
     }
 
-    public void setPartId(String partId) {
-        this.partId = partId;
+    public String getName() { 
+        return name; 
     }
 
-    public String getName() {
-        return name;
+    public void setName(String name) { 
+        this.name = name; 
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getUnitPrice() { 
+        return unitPrice; 
     }
 
-    public int getQuantity() {
-        return quantity;
+    public void setUnitPrice(double unitPrice) { 
+        this.unitPrice = unitPrice; 
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public int getStockQuantity() { 
+        return stockQuantity; 
+    }
+
+    public void setStockQuantity(int stockQuantity) { 
+        this.stockQuantity = stockQuantity; 
+    }
+
+    public void reduceStock(int quantity) throws InsufficientStockException {
+        if (quantity > stockQuantity) {
+            throw new InsufficientStockException("Not enough stock for part: " + name);
+        }
+        this.stockQuantity -= quantity;
     }
 }

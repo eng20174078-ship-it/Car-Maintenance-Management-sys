@@ -1,32 +1,12 @@
 package models;
 
-public class Technician {
-    private String id;
-    private String name;
+public class Technician extends User implements RepairUpdatable {
+
     private String specialty;
 
-    // Constructor
-    public Technician(String id, String name, String specialty) {
-        this.id = id;
-        this.name = name;
+    public Technician(int id, String name, String phone, String specialty) {
+        super(id, name, phone);
         this.specialty = specialty;
-    }
-
-    // Getter and Setter methods
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSpecialty() {
@@ -35,5 +15,15 @@ public class Technician {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    @Override
+    public String getRole() {
+        return "Technician";
+    }
+
+    @Override
+    public void updateRepairStatus(MaintenanceOrder order, RepairStatus newStatus) {
+        order.setStatus(newStatus);
     }
 }
