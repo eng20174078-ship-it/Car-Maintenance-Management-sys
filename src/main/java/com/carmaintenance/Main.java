@@ -123,26 +123,77 @@
 package com.carmaintenance;
 
 import com.carmaintenance.gui.Dashboard;
+import com.carmaintenance.gui.ThemeManager;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("🚀 بدء تشغيل نظام إدارة صيانة السيارات");
+        System.out.println("🎨 بدء تشغيل نظام إدارة صيانة السيارات - الإصدار المحسن");
 
-        // تعيين واجهة النظام
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            System.out.println("✓ تم تعيين واجهة النظام");
-        } catch (Exception e) {
-            System.out.println("✗ خطأ في تعيين واجهة النظام: " + e.getMessage());
-        }
+        // تطبيق السمة العالمية
+        ThemeManager.applyTheme();
 
-        // تشغيل لوحة التحكم
+        // تحسين مظهر النوافذ
+        setupSystemLookAndFeel();
+
+        // تشغيل لوحة التحكم المحسنة
         SwingUtilities.invokeLater(() -> {
-            Dashboard dashboard = new Dashboard();
-            dashboard.setVisible(true);
-            System.out.println("✓ تم تحميل لوحة التحكم");
+            try {
+                Dashboard dashboard = new Dashboard();
+                dashboard.setVisible(true);
+                System.out.println("✅ تم تحميل لوحة التحكم المحسنة");
+
+                // إظهار رسالة ترحيبية
+                showWelcomeMessage();
+
+            } catch (Exception e) {
+                System.err.println("❌ خطأ في تحميل لوحة التحكم: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private static void setupSystemLookAndFeel() {
+        try {
+            // استخدام واجهة النظام مع تحسينات
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            // تحسين إعدادات النوافذ
+            UIManager.put("TabbedPane.contentOpaque", true);
+            UIManager.put("TabbedPane.selected", ThemeManager.PRIMARY_COLOR);
+            UIManager.put("OptionPane.background", ThemeManager.LIGHT_COLOR);
+            UIManager.put("Panel.background", ThemeManager.LIGHT_COLOR);
+            UIManager.put("TextField.selectionBackground", ThemeManager.PRIMARY_COLOR);
+            UIManager.put("TextField.selectionForeground", Color.WHITE);
+            UIManager.put("TextArea.selectionBackground", ThemeManager.PRIMARY_COLOR);
+            UIManager.put("TextArea.selectionForeground", Color.WHITE);
+
+        } catch (Exception e) {
+            System.err.println("⚠️ لا يمكن تطبيق واجهة النظام المحسنة: " + e.getMessage());
+        }
+    }
+
+    private static void showWelcomeMessage() {
+        SwingUtilities.invokeLater(() -> {
+            String welcomeMessage =
+                    "<html><div style='text-align: center; padding: 20px;'>" +
+                            "<h1 style='color: #0066cc;'>🚗 مرحباً بك في نظام إدارة صيانة السيارات</h1>" +
+                            "<p style='font-size: 14px; color: #666;'>الإصدار المحسن 2.0</p>" +
+                            "<hr>" +
+                            "<p><b>✨ المميزات الجديدة:</b></p>" +
+                            "<ul style='text-align: left;'>" +
+                            "<li>واجهة مستخدم محسنة وحديثة</li>" +
+                            "<li>لوحة تحكم مع إحصائيات حية</li>" +
+                            "<li>تصميم متجاوب وألوان متناسقة</li>" +
+                            "<li>أداء أسرع وتجربة استخدام أفضل</li>" +
+                            "</ul>" +
+                            "<p style='margin-top: 20px;'>نظام متكامل لإدارة جميع عمليات ورشة صيانة السيارات</p>" +
+                            "</div></html>";
+
+            JOptionPane.showMessageDialog(null, welcomeMessage,
+                    "مرحباً بك", JOptionPane.INFORMATION_MESSAGE);
         });
     }
 }
